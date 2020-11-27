@@ -52,6 +52,7 @@ class Step2 extends React.Component {
     console.log(this.state);
   }
   
+
   handleChange(event) {
     let input = this.state.input;
     input[event.target.name] = event.target.value;
@@ -59,6 +60,7 @@ class Step2 extends React.Component {
     this.setState({
       input
     });
+    this.validate();
   }
 
   handleSelect = (event) => {
@@ -117,10 +119,19 @@ class Step2 extends React.Component {
   
       if (typeof input["employee_email"] !== "undefined") {
           
-        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+))|("[\w-\s]+")([\w-]+(?:\.[\w-]+)))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
         if (!pattern.test(input["employee_email"])) {
           isValid = false;
           errors["employee_email"] = "Please enter valid email address.";
+        }
+      }
+
+      if (typeof input["number"] !== "undefined") {
+          
+        let pattern = new RegExp(/^[0]?[789]\d{9}$/);
+        if (!pattern.test(input["pan"])) {
+          isValid = false;
+          errors["number"] = "Please enter valid email address.";
         }
       }
   
@@ -159,15 +170,18 @@ class Step2 extends React.Component {
   render() {
     return (
       <main >
+        <div class="main">
       <div>
-        <h1>Add User</h1>
+        <h1 align="center">STEP 2 : Contact Information</h1>
+        <p>Confirm the following details and hit proceed to continue.</p>
+        <p>To revise details, just click on the box and re-type the information.</p>
         
 
-        <form onSubmit={this.handleSubmit}>
+        <form class="form" onSubmit={this.handleSubmit}>
         
           <TextField
-            id="employee_id"
-            label="employee_id"
+            id="name"
+            label="Authorised person name"
             // className={classes.textField}
             // InputProps={{
             //     className: classes.input
@@ -176,6 +190,7 @@ class Step2 extends React.Component {
             name="name"
             margin="normal"
             variant="outlined"
+            style={{width : 300}}
             required
             autoFocus
             value = {this.state.input.name}
@@ -184,6 +199,7 @@ class Step2 extends React.Component {
             helperText = {this.state.errors.name}
           />
         <br/>
+        <div class="icondiv3">
         <TextField
           id="employee_email"
           label="Email"
@@ -193,17 +209,24 @@ class Step2 extends React.Component {
           // }}
           type="email"
           name="employee_email"
+          style={{width : 300}}
           autoComplete="email"
           margin="normal"
           variant="outlined"
           required
           value = {this.state.input.employee_email}
           onChange = {this.handleChange}
-          error = {this.state.errors.employee_email}
+          // error = {this.state.errors.employee_email}
           helperText = {this.state.errors.employee_email}
         />
+        {this.state.errors.employee_email ? <i class="fas fa-times-circle" id = "cross"></i> : <i class="fas fa-check-circle" id="check"></i>}
+
+          {/* <i class="fas fa-check-circle" id="check"></i>
+        <i class="fas fa-times-circle" id = "cross"></i> */}
+        </div>
         <br/>
 
+        <div class="icondiv3">
         <TextField
           id="number"
           label="Number"
@@ -213,11 +236,17 @@ class Step2 extends React.Component {
           //   shrink: true,
           // }}
           variant="outlined"
+          style={{width : 300}}
           margin="normal"
           required
           value = {this.state.input.number}
           onChange = {this.handleChange}
         />
+        {this.state.errors.number ? <i class="fas fa-times-circle" id = "cross"></i> : <i class="fas fa-check-circle" id="check"></i>}
+
+        {/* <i class="fas fa-check-circle" id="check"></i>
+        <i class="fas fa-times-circle" id = "cross"></i> */}
+        </div>
         <br/>
 
         {/* <FormControl variant="outlined" >
@@ -242,21 +271,26 @@ class Step2 extends React.Component {
       </FormControl> */} 
 
 
-
+<div class="icondiv3">
         <TextField
           id="address"
           label="Address"
           type="text"
           name = "address"
+          style={{marginLeft : 400}}
           // InputLabelProps={{
           //   shrink: true,
           // }}
           variant="outlined"
+          style={{width : 300}}
           margin="normal"
           required
           value = {this.state.input.address}
           onChange = {this.handleChange}
         />
+        <i class="fas fa-check-circle" id="check"></i>
+        <i class="fas fa-times-circle" id = "cross"></i>
+        </div>
         <br/>
 
 
@@ -270,6 +304,7 @@ class Step2 extends React.Component {
           onChange={this.handleSelect}
           // helperText="Please select your currency"
           variant="outlined"
+          style={{width : 300}}
           margin="normal"
           required
                     // InputLabelProps={{
@@ -282,6 +317,8 @@ class Step2 extends React.Component {
             </MenuItem>
           ))}
         </TextField>
+        
+        
 
       <br/>
 
@@ -327,7 +364,7 @@ class Step2 extends React.Component {
 
                 
                     {/* <Typography className={classes.divider} />     */}
-        <Button type="submit" color="primary" variant="contained">Submit</Button> 
+        <Button  type="submit" color="primary" variant="contained" style={{marginTop : 20}}>PROCEED</Button> 
           {/* <input type="submit" value="Submit"/> */}
           {/* <label htmlFor="contained-button-file">
         <Button variant="contained" color="primary" component="span">
@@ -338,6 +375,7 @@ class Step2 extends React.Component {
             {/* Submit */}
           {/* </Button> */}
         </form>
+      </div>
       </div>
       </main>
     );

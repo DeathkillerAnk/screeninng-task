@@ -7,7 +7,9 @@ import {
 } from "react-router-dom";
 
 import Step2 from './step2';
-
+import Step3 from './step3';
+import './step.css';
+import './App.css';
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
 //
@@ -20,20 +22,32 @@ import Step2 from './step2';
 export default function App() {
   return (
     <Router>
-      <div>
-        <ul>
+      <Route path = "/step2"><Step2/></Route>
+      <Route path = "/step3"><Step3/></Route>
+      <br/>
+      <Link to="/step2">step2</Link>
+      <br/>
+      <Link to="/step3">step3</Link>
+      {/* <div> */}
+        {/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          {/* <li>
+            <Link to="/step3">step3</Link>
+          </li> */}
+          {/* <li>
             <Link to="/step2">step2</Link>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/step3">step3</Link>
           </li>
-        </ul>
+          <li>
+            <Link to="/dash">dash</Link>
+          </li>
+        </ul>  */}
 
-        <hr />
+        {/* <hr /> */}
 
         {/*
           A <Switch> looks through all its children <Route>
@@ -42,18 +56,25 @@ export default function App() {
           you have multiple routes, but you want only one
           of them to render at a time
         */}
-        <Switch>
-          <Route exact path="/">
+        {/* <Switch> */}
+          {/* <Route exact path="/">
             <Home />
-          </Route>
-          <Route component={Step2}>
+          </Route> 
+                    {/* <Route component={Step3}>
+            {/* <Dashboard /> */}
+          {/* </Route>  */}
+          
+          {/* <Route component={Step2}>
             {/* <step2 /> */}
-          </Route>
-          <Route path="/dashboard">
+          {/* </Route>
+          <Route component={Step3}>
+            {/* <Dashboard /> */}
+          {/* </Route>
+          <Route exact path="/dash">
             <Dashboard />
-          </Route>
-        </Switch>
-      </div>
+          </Route>  */}
+        {/* </Switch> */}
+      {/* </div> */}
     </Router>
   );
 }

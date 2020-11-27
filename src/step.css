@@ -1,0 +1,34 @@
+.main
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.form
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+.icondiv3
+{
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-left: 66px;
+    margin-top: 1px;
+}
+
+#check
+{
+    margin-left: 20px;
+    color: green;
+}
+#cross
+{
+    margin-left: 20px;
+    color: red;
+}
