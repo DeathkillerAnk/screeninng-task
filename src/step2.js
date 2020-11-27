@@ -1,14 +1,9 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import NativeSelect from '@material-ui/core/NativeSelect';
+
 import MenuItem from '@material-ui/core/MenuItem';
 
-const FormControl = require('@material-ui/core/FormControl').default;
-const FormHelperText = require('@material-ui/core/FormHelperText').default;
-const InputLabel = require('@material-ui/core/InputLabel').default;
-// import Select from '@material-ui/core/Select';
 
   
 class Step2 extends React.Component {
@@ -85,8 +80,8 @@ class Step2 extends React.Component {
         let input = {};
         input["name"] = ""
         input["employee_email"] = "";
-        // input["employee_password"] = "";
-        // input["employee_confirm_password"] = "";
+        input["address"] = "";
+        input["number"] = "";
         input["state_"] = "";
         this.setState({input:input});
   
@@ -101,7 +96,12 @@ class Step2 extends React.Component {
    
       if (!input["name"]) {
         isValid = false;
-        errors["name"] = "Please enter employee id.";
+        errors["name"] = "Please enter name.";
+      }
+
+      if (!input["address"]) {
+        isValid = false;
+        errors["address"] = "Please enter address.";
       }
   
       // if (typeof input["name"] !== "undefined") {
@@ -119,7 +119,7 @@ class Step2 extends React.Component {
   
       if (typeof input["employee_email"] !== "undefined") {
           
-        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+))|("[\w-\s]+")([\w-]+(?:\.[\w-]+)))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        var pattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i);
         if (!pattern.test(input["employee_email"])) {
           isValid = false;
           errors["employee_email"] = "Please enter valid email address.";
@@ -129,36 +129,12 @@ class Step2 extends React.Component {
       if (typeof input["number"] !== "undefined") {
           
         let pattern = new RegExp(/^[0]?[789]\d{9}$/);
-        if (!pattern.test(input["pan"])) {
+        if (!pattern.test(input["number"])) {
           isValid = false;
-          errors["number"] = "Please enter valid email address.";
+          errors["number"] = "Please enter valid Mobile no..";
         }
       }
   
-      // if (!input["employee_password"]) {
-      //   isValid = false;
-      //   errors["employee_password"] = "Please enter employee password.";
-      // }
-  
-      // if (!input["employee_confirm_password"]) {
-      //   isValid = false;
-      //   errors["employee_confirm_password"] = "Please enter confirm password.";
-      // }
-  
-      // if (typeof input["employee_password"] !== "undefined") {
-      //   if(input["employee_password"].length < 6){
-      //       isValid = false;
-      //       errors["employee_password"] = "Please add at least 6 charachter.";
-      //   }
-      // }
-  
-      // if (typeof input["employee_password"] !== "undefined" && typeof input["employee_confirm_password"] !== "undefined") {
-          
-      //   if (input["employee_password"] !== input["employee_confirm_password"]) {
-      //     isValid = false;
-      //     errors["employee_password"] = "Passwords don't match.";
-      //   }
-      // }
   
       this.setState({
         errors: errors
@@ -178,7 +154,7 @@ class Step2 extends React.Component {
         
 
         <form class="form" onSubmit={this.handleSubmit}>
-        
+         <div class="icondiv3">
           <TextField
             id="name"
             label="Authorised person name"
@@ -198,7 +174,9 @@ class Step2 extends React.Component {
             error = {this.state.errors.name}
             helperText = {this.state.errors.name}
           />
-        <br/>
+          {this.state.errors.name ? <i class="fas fa-times-circle" id = "cross"></i> : <i class="fas fa-check-circle" id="check"></i>}
+         </div>
+
         <div class="icondiv3">
         <TextField
           id="employee_email"
@@ -216,7 +194,7 @@ class Step2 extends React.Component {
           required
           value = {this.state.input.employee_email}
           onChange = {this.handleChange}
-          // error = {this.state.errors.employee_email}
+          error = {this.state.errors.employee_email}
           helperText = {this.state.errors.employee_email}
         />
         {this.state.errors.employee_email ? <i class="fas fa-times-circle" id = "cross"></i> : <i class="fas fa-check-circle" id="check"></i>}
@@ -224,7 +202,6 @@ class Step2 extends React.Component {
           {/* <i class="fas fa-check-circle" id="check"></i>
         <i class="fas fa-times-circle" id = "cross"></i> */}
         </div>
-        <br/>
 
         <div class="icondiv3">
         <TextField
@@ -241,37 +218,13 @@ class Step2 extends React.Component {
           required
           value = {this.state.input.number}
           onChange = {this.handleChange}
+          error = {this.state.errors.number}
         />
         {this.state.errors.number ? <i class="fas fa-times-circle" id = "cross"></i> : <i class="fas fa-check-circle" id="check"></i>}
-
-        {/* <i class="fas fa-check-circle" id="check"></i>
-        <i class="fas fa-times-circle" id = "cross"></i> */}
         </div>
-        <br/>
+        
 
-        {/* <FormControl variant="outlined" >
-        <InputLabel shrink htmlFor="age-native-label-placeholder">
-          State
-        </InputLabel>
-        <NativeSelect
-          variant="outlined"
-          margin="normal"
-          value={this.state.input.state_}
-          onChange={this.handleSelect}
-          inputProps={{
-            name: 'state_',
-            id: 'age-native-label-placeholder',
-          }}
-        >
-          {/* <option value="">None</option> */}
-          {/* <option value="Maha">Maha</option>
-          <option value="Haryana">Haryana</option>
-          <option value="MP">MP</option>
-        </NativeSelect>
-      </FormControl> */} 
-
-
-<div class="icondiv3">
+      <div class="icondiv3">
         <TextField
           id="address"
           label="Address"
@@ -288,10 +241,11 @@ class Step2 extends React.Component {
           value = {this.state.input.address}
           onChange = {this.handleChange}
         />
-        <i class="fas fa-check-circle" id="check"></i>
-        <i class="fas fa-times-circle" id = "cross"></i>
+        {this.state.errors.address ? <i class="fas fa-times-circle" id = "cross"></i> : <i class="fas fa-check-circle" id="check"></i>}
+
+        {/* <i class="fas fa-check-circle" id="check"></i>
+        <i class="fas fa-times-circle" id = "cross"></i> */}
         </div>
-        <br/>
 
 
       <TextField
@@ -318,62 +272,13 @@ class Step2 extends React.Component {
           ))}
         </TextField>
         
-        
-
-      <br/>
-
-
-
-        {/* <TextField
-          id="employee_password"
-          label="Password"
-          // className={classes.textField}
-          // InputProps={{
-          //     className: classes.input
-          // }}
-          type="password"
-          name="employee_password"
-          margin="normal"
-          variant="outlined"
-          required
-          value = {this.state.input.employee_password}
-          onChange = {this.handleChange}
-          error = {this.state.errors.employee_password}
-          helperText = {this.state.errors.employee_password}
-        />
-        <br/>
-        <TextField
-          id="employee_confirm_password"
-          label="Confirm Password"
-          // className={classes.textField}
-          // InputProps={{
-          //     className: classes.input
-          // }}
-          type="password"
-          name="employee_confirm_password"
-          margin="normal"
-          variant="outlined"
-          required
-          value = {this.state.input.employee_confirm_password}
-          onChange = {this.handleChange}
-          error = {this.state.errors.employee_password}
-          helperText = {this.state.errors.employee_password}
-        /> */}
+      
         <br/>
 
 
                 
-                    {/* <Typography className={classes.divider} />     */}
         <Button  type="submit" color="primary" variant="contained" style={{marginTop : 20}}>PROCEED</Button> 
-          {/* <input type="submit" value="Submit"/> */}
-          {/* <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
-          Upload
-        </Button>
-      </label>
-          <input accept="image/*"  id="icon-button-file" type="file" /> */}
-            {/* Submit */}
-          {/* </Button> */}
+
         </form>
       </div>
       </div>
